@@ -8,16 +8,15 @@
     <script defer src="script.js"></script>
     <style>
         body { font-family: Arial, sans-serif; background-color: #fce4ec; }
-        .container { display: flex; max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 10px; }
+        .container { display: flex; max-width: 1200px; margin: auto; background: white; padding: 20px; border-radius: 10px; }
         .filter-section { width: 200px; padding-right: 20px; }
-        .puppy-list { flex-grow: 1; }
-        .puppy { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #ddd; padding: 10px; }
-        img { width: 80px; height: 80px; border-radius: 50%; }
+        .puppy-list { flex-grow: 1; display: flex; flex-wrap: wrap; gap: 20px; }
+        img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; }
         header { text-align: center; padding: 20px; background-color: #ffcdd2; }
         footer { text-align: center; padding: 10px; background-color: #ffcdd2; margin-top: 20px; }
-        .gallery { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
-        .puppy-card { text-align: center; border: 1px solid #ddd; padding: 10px; border-radius: 10px; background-color: #fff; }
-        .adopt-btn { background-color: #ff4081; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
+        .puppy-card { text-align: center; border: 1px solid #ddd; padding: 15px; border-radius: 10px; background-color: #fff; width: 200px; }
+        .adopt-btn { background-color: #ff4081; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; margin-top: 10px; }
+        .adopt-btn:hover { background-color: #e91e63; }
     </style>
 </head>
 <body>
@@ -34,6 +33,10 @@
                 <option value="Labrador">Labrador</option>
                 <option value="Beagle">Beagle</option>
                 <option value="Poodle">Poodle</option>
+                <option value="Bulldog">Bulldog</option>
+                <option value="Golden Retriever">Golden Retriever</option>
+                <option value="German Shepherd">German Shepherd</option>
+                <option value="Chihuahua">Chihuahua</option>
             </select>
             <br>
             <label>Size:</label>
@@ -48,19 +51,87 @@
         </div>
         
         <div class="puppy-list" id="puppyList">
+            <!-- Labrador Puppies -->
             <div class="puppy-card" data-breed="Labrador" data-size="Large">
-                <img src="labrador.jpg" alt="Labrador">
+                <img src="images/labrador1.jpg" alt="Labrador">
                 <h2>Bella</h2>
                 <button class="adopt-btn">Adopt Me</button>
             </div>
+            <div class="puppy-card" data-breed="Labrador" data-size="Large">
+                <img src="images/labrador2.jpg" alt="Labrador">
+                <h2>Charlie</h2>
+                <button class="adopt-btn">Adopt Me</button>
+            </div>
+
+            <!-- Beagle Puppies -->
             <div class="puppy-card" data-breed="Beagle" data-size="Medium">
-                <img src="beagle.jpg" alt="Beagle">
+                <img src="images/beagle1.jpg" alt="Beagle">
                 <h2>Max</h2>
                 <button class="adopt-btn">Adopt Me</button>
             </div>
+            <div class="puppy-card" data-breed="Beagle" data-size="Medium">
+                <img src="images/beagle2.jpg" alt="Beagle">
+                <h2>Lucy</h2>
+                <button class="adopt-btn">Adopt Me</button>
+            </div>
+
+            <!-- Poodle Puppies -->
             <div class="puppy-card" data-breed="Poodle" data-size="Small">
-                <img src="poodle.jpg" alt="Poodle">
+                <img src="images/poodle1.jpg" alt="Poodle">
                 <h2>Luna</h2>
+                <button class="adopt-btn">Adopt Me</button>
+            </div>
+            <div class="puppy-card" data-breed="Poodle" data-size="Small">
+                <img src="images/poodle2.jpg" alt="Poodle">
+                <h2>Milo</h2>
+                <button class="adopt-btn">Adopt Me</button>
+            </div>
+
+            <!-- Bulldog Puppies -->
+            <div class="puppy-card" data-breed="Bulldog" data-size="Medium">
+                <img src="images/bulldog1.jpg" alt="Bulldog">
+                <h2>Rocky</h2>
+                <button class="adopt-btn">Adopt Me</button>
+            </div>
+            <div class="puppy-card" data-breed="Bulldog" data-size="Medium">
+                <img src="images/bulldog2.jpg" alt="Bulldog">
+                <h2>Daisy</h2>
+                <button class="adopt-btn">Adopt Me</button>
+            </div>
+
+            <!-- Golden Retriever Puppies -->
+            <div class="puppy-card" data-breed="Golden Retriever" data-size="Large">
+                <img src="images/golden1.jpg" alt="Golden Retriever">
+                <h2>Cooper</h2>
+                <button class="adopt-btn">Adopt Me</button>
+            </div>
+            <div class="puppy-card" data-breed="Golden Retriever" data-size="Large">
+                <img src="images/golden2.jpg" alt="Golden Retriever">
+                <h2>Sadie</h2>
+                <button class="adopt-btn">Adopt Me</button>
+            </div>
+
+            <!-- German Shepherd Puppies -->
+            <div class="puppy-card" data-breed="German Shepherd" data-size="Large">
+                <img src="images/german1.jpg" alt="German Shepherd">
+                <h2>Rex</h2>
+                <button class="adopt-btn">Adopt Me</button>
+            </div>
+            <div class="puppy-card" data-breed="German Shepherd" data-size="Large">
+                <img src="images/german2.jpg" alt="German Shepherd">
+                <h2>Lola</h2>
+                <button class="adopt-btn">Adopt Me</button>
+            </div>
+
+            <!-- Chihuahua Puppies -->
+            <div class="puppy-card" data-breed="Chihuahua" data-size="Small">
+                <img src="images/chihuahua1.jpg" alt="Chihuahua">
+                <h2>Peanut</h2>
+                <button class="adopt-btn">Adopt Me</button>
+            </div>
+            <div class="puppy-card" data-breed="Chihuahua" data-size="Small">
+                <img src="images/chihuahua2.jpg" alt="Chihuahua">
+                <h2>Bella</h2>
                 <button class="adopt-btn">Adopt Me</button>
             </div>
         </div>
