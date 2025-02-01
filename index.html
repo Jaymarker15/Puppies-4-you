@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puppies for Adoption</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #ff6f61;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-section {
+            width: 250px;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-section h3 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .filter-section label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .filter-section select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            background-color: white;
+            color: #333;
+        }
+
+        .filter-section button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .filter-section button:hover {
+            background-color: #e65a50;
+        }
+
+        .puppy-list {
+            flex-grow: 1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        .puppy-card {
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: white;
+            width: 200px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .puppy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .puppy-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .puppy-card h2 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: #333;
+        }
+
+        .puppy-card .adopt-btn {
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .puppy-card .adopt-btn:hover {
+            background-color: #e65a50;
+        }
+
+        /* Puppy Profile Modal */
+        .profile-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-content img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .profile-content h2 {
+            margin: 0;
+            font-size: 1.75rem;
+            color: #333;
+        }
+
+        .profile-content p {
+            margin: 10px 0;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .profile-content .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .profile-content .action-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .profile-content .action-buttons .adopt-btn {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .profile-content .action-buttons .adopt-btn:hover {
+            background-color: #45a049;
+        }
+
+        .profile-content .action-buttons .cancel-btn {
+            background-color: #ff6f61;
+            color: white;
+        }
+
+        .profile-content .action-buttons .cancel-btn:hover {
+            background-color: #e65a50;
+        }
+
+        /* Thank You Modal */
+        .thank-you-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .thank-you-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .thank-you-content h2 {
+            margin: 0;
+            font-size: 1.75rem;
+            color: #333;
+        }
+
+        .thank-you-content p {
+            margin: 10px 0;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .thank-you-content button {
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .thank-you-content button:hover {
+            background-color: #e65a50;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🐶 Find Your Furry Friend! 🐾</h1>
+    </header>
+
+    <div class="container">
+        <div class="filter-section">
+            <h3>Filters</h3>
+            <label>Breed:</label>
+            <select id="breedFilter">
+                <option value="">All</option>
+                <option value="Labrador">Labrador</option>
+                <option value="Beagle">Beagle</option>
+                <option value="Poodle">Poodle</option>
+                <option value="Bulldog">Bulldog</option>
+                <option value="Golden Retriever">Golden Retriever</option>
+                <option value="German Shepherd">German Shepherd</option>
+                <option value="Chihuahua">Chihuahua</option>
+                <option value="Shiba Inu">Shiba Inu</option>
+                <option value="Dachshund">Dachshund</option>
+            </select>
+            <br>
+            <label>Size:</label>
+            <select id="sizeFilter">
+                <option value="">All</option>
+                <option value="Small">Small</option>
+                <option value="Medium">Medium</option>
+                <option value="Large">Large</option>
+            </select>
+            <br>
+            <button onclick="filterPuppies()">Filter</button>
+        </div>
+        
+        <div class="puppy-list" id="puppyList">
+            <!-- Labrador Puppies -->
+            <div class="puppy-card" data-breed="Labrador" data-size="Large">
+                <img src="images/labrador1.jpg" alt="Labrador">
+                <h2>Bella</h2>
+                <button class="adopt-btn" onclick="openProfile('Bella', 'Labrador', 'Large', 'images/labrador1.jpg', 'Bella is a playful and energetic Labrador who loves to run and play fetch. She is great with kids and other pets.')">Adopt Me</button>
+            </div>
+            <div class="puppy-card" data-breed="Labrador" data-size="Large">
+                <img src="images/labrador2.jpg" alt="Labrador">
+                <h2>Charlie</h2>
+                <button class="adopt-btn" onclick="openProfile('Charlie', 'Labrador', 'Large', 'images/labrador2.jpg', 'Charlie is a friendly and loyal Labrador who enjoys long walks and cuddles. He is very well-trained and loves to please.')">Adopt Me</button>
+            </div>
+
+            <!-- Beagle Puppies -->
+            <div class="puppy-card" data-breed="Beagle" data-size="Medium">
+                <img src="images/beagle1.jpg" alt="Beagle">
+                <h2>Max</h2>
+                <button class="adopt-btn" onclick="openProfile('Max', 'Beagle', 'Medium', 'images/beagle1.jpg', 'Max is a curious and adventurous Beagle who loves exploring new places. He is very social and gets along well with everyone.')">Adopt Me</button>
+            </div>
+            <div class="puppy-card" data-breed="Beagle" data-size="Medium">
+                <img src="images/beagle2.jpg" alt="Beagle">
+                <h2>Lucy</h2>
+                <button class="adopt-btn" onclick="openProfile('Lucy', 'Beagle', 'Medium', 'images/beagle2.jpg', 'Lucy is a sweet and gentle Beagle who loves to snuggle and nap. She is great with kids and other dogs.')">Adopt Me</button>
+            </div>
+
+            <!-- Poodle Puppies -->
+            <div class="puppy-card" data-breed="Poodle" data-size="Small">
+                <img src="images/poodle1.jpg" alt="Poodle">
+                <h2>Luna</h2>
+                <button class="adopt-btn" onclick="openProfile('Luna', 'Poodle', 'Small', 'images/poodle1.jpg', 'Luna is a smart and elegant Poodle who loves to learn new tricks. She is hypoallergenic and perfect for families with allergies.')">Adopt Me</button>
+            </div>
+            <div class="puppy-card" data-breed="Poodle" data-size="Small">
+                <img src="images/poodle2.jpg" alt="Poodle">
+                <h2>Milo</h2>
+                <button class="adopt-btn" onclick="openProfile('Milo', 'Poodle', 'Small', 'images/poodle2.jpg', 'Milo is a playful and affectionate Poodle who loves to be the center of attention. He is great with kids and other pets.')">Adopt Me</button>
+            </div>
+
+            <!-- Bulldog Puppies -->
+            <div class="puppy-card" data-breed="Bulldog" data-size="Medium">
+                <img src="images/bulldog1.jpg" alt="Bulldog">
+                <h2>Rocky</h2>
+                <button class="adopt-btn" onclick="openProfile('Rocky', 'Bulldog', 'Medium', 'images/bulldog1.jpg', 'Rocky is a strong and loyal Bulldog who loves to relax and cuddle. He is great with kids and has a calm demeanor.')">Adopt Me</button>
+            </div>
+            <div class="puppy-card" data-breed="Bulldog" data-size="Medium">
+                <img src="images/bulldog2.jpg" alt="Bulldog">
+                <h2>Daisy</h2>
+                <button class="adopt-btn" onclick="openProfile('Daisy', 'Bulldog', 'Medium', 'images/bulldog2.jpg', 'Daisy is a sweet and gentle Bulldog who loves to play and nap. She is great with kids and other pets.')">Adopt Me</button>
+            </div>
+
+            <!-- Golden Retriever Puppies -->
+            <div class="puppy-card" data-breed="Golden Retriever" data-size="Large">
+                <img src="images/golden1.jpg" alt="Golden Retriever">
+                <h2>Cooper</h2>
+                <button class="adopt-btn" onclick="openProfile('Cooper', 'Golden Retriever', 'Large', 'images/golden1.jpg', 'Cooper is a friendly and outgoing Golden Retriever who loves to play fetch and swim. He is great with kids and other pets.')">Adopt Me</button>
+            </div>
+            <div class="puppy-card" data-breed="Golden Retriever" data-size="Large">
+                <img src="images/golden2.jpg" alt="Golden Retriever">
+                <h2>Sadie</h2>
+                <button class="adopt-btn" onclick="openProfile('Sadie', 'Golden Retriever', 'Large', 'images/golden2.jpg', 'Sadie is a gentle and loving Golden Retriever who enjoys long walks and cuddles. She is great with kids and other pets.')">Adopt Me</button>
+            </div>
+
+            <!-- German Shepherd Puppies -->
+            <div class="puppy-card" data-breed="German Shepherd" data-size="Large">
+                <img src="images/german1.jpg" alt="German Shepherd">
+                <h2>Rex</h2>
+                <button class="adopt-btn" onclick="openProfile('Rex', 'German Shepherd', 'Large', 'images/german1.jpg', 'Rex is a strong and intelligent German Shepherd who loves to learn new tricks. He is great with kids and very protective.')">Adopt Me</button>
+            </div>
+            <div class="puppy-card" data-breed="German Shepherd" data-size="Large">
+                <img src="images/german2.jpg" alt="German Shepherd">
+                <h2>Lola</h2>
+                <button class="adopt-btn" onclick="openProfile('Lola', 'German Shepherd', 'Large', 'images/german2.jpg', 'Lola is a loyal and energetic German Shepherd who loves to play and explore. She is great with kids and other pets.')">Adopt Me</button>
+            </div>
+
+            <!-- Chihuahua Puppies -->
+            <div class="puppy-card" data-breed="Chihuahua" data-size="Small">
+                <img src="images/chihuahua1.jpg" alt="Chihuahua">
+                <h2>Peanut</h2>
+                <button class="adopt-btn" onclick="openProfile('Peanut', 'Chihuahua', 'Small', 'images/chihuahua1.jpg', 'Peanut is a tiny and energetic Chihuahua who loves to cuddle and play. He is great with kids and other small pets.')">Adopt Me</button>
+            </div>
+            <div class="puppy-card" data-breed="Chihuahua" data-size="Small">
+                <img src="images/chihuahua2.jpg" alt="Chihuahua">
+                <h2>Bella</h2>
+                <button class="adopt-btn" onclick="openProfile('Bella', 'Chihuahua', 'Small', 'images/chihuahua2.jpg', 'Bella is a sweet and affectionate Chihuahua who loves to nap and snuggle. She is great with kids and other small pets.')">Adopt Me</button>
+            </div>
+
+            <!-- Shiba Inu Puppies -->
+            <div class="puppy-card" data-breed="Shiba Inu" data-size="Medium">
+                <img src="images/shiba1.jpg" alt="Shiba Inu">
+                <h2>Kobe</h2>
+                <button class="adopt-btn" onclick="openProfile('Kobe', 'Shiba Inu', 'Medium', 'images/shiba1.jpg', 'Kobe is a playful and independent Shiba Inu who loves to explore and play. He is great with kids and other pets.')">Adopt Me</button>
+            </div>
+            <div class="puppy-card" data-breed="Shiba Inu
